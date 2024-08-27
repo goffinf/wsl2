@@ -1,0 +1,13 @@
+---
+- name: Configure a WSL2 distro to be used as an Ansible installer base image
+  hosts: all_hosts
+  become: true
+  gather_facts: yes
+  # gather_facts: no
+
+  vars_files:
+    - vars/all.yml
+
+  tasks:
+  - name: ping hosts
+    ansible.builtin.ping:

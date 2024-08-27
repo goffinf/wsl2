@@ -1,0 +1,120 @@
+ARG CYTOPIA_IMAGE_TAG=${CYTOPIA_IMAGE_TAG:-2.13-tools}
+ARG GOFFINF_SSH_FILES_IMAGE_TAG=${GOFFINF_SSH_FILES_IMAGE_TAG:-000002}
+
+# FROM goffinf/infra_ssh_files:${GOFFINF_SSH_FILES_IMAGE_TAG} AS ssh_keys
+
+FROM cytopia/ansible:${CYTOPIA_IMAGE_TAG}
+
+ARG MAINTAINER
+
+LABEL maintainer="${MAINTAINER}"
+
+ARG LOCALE_LANG=${LOCALE_LANG:-en_GB.UTF-8}
+
+# Fix potential UTF-8 errors with ansible-test.
+ENV MUSL_LOCALE_DEPS="cmake make musl-dev gcc gettext-dev libintl"
+ENV MUSL_LOCPATH="/usr/share/i18n/locales/musl"
+ENV LANG=${LOCALE_LANG} \
+    LANGUAGE=${LOCALE_LANG} \
+    LC_CTYPE=${LOCALE_LANG} \
+    LC_ALL=${LOCALE_LANG}
+
+# Additional binaries
+RUN set -eux \
+    && apk add --no-cache \
+       ca-certificates \
+       curl \
+       less \
+       $MUSL_LOCALE_DEPS \
+       shadow \
+       sshpass \
+       sudo \
+       unzip \
+       wget \
+       whois \
+       zip \
+     && wget https://gitlab.com/rilian-la-te/musl-locales/-/archive/master/musl-locales-master.zip \
+     && unzip musl-locales-master.zip \
+     && cd musl-locales-master \
+     && cmake -DLOCALE_PROFILE=OFF -D CMAKE_INSTALL_PREFIX:PATH=/usr . && make && make install \
+     && cd .. && rm -r musl-locales-master \
+     && mkdir /tmp/root
+
+ARG ANSIBLE_GID=${ANSIBLE_GID:-1001}
+ARG ANSIBLE_UID=${ANSIBLE_UID:-1001}
+ARG ANSIBLE_USERNAME=${ANSIBLE_USERNAME:-ansible}
+ARG SSH_INCLUDE_KEYS=${SSH_INCLUDE_KEYS:-"false"}
+ARG SSH_KEYPAIR_ROOT_NAME=${SSH_KEYPAIR_ROOT_NAME:-id_rsa}
+
+# Copy SSH Key files into THIS image
+# COPY --from=ssh_keys --chown=root:root /root/.ssh/${SSH_KEYPAIR_ROOT_NAME}* /tmp/root/.ssh/
+
+# Optionally set the GID and UID for the ansible user
+# Optionally copy SSH Key Files into this image
+
+RUN set -eux && \
+    # Check whether a different GID and UID is needed for the ansible user/group
+    EXISTING_ANSIBLE_GID=$(id ansible -g); \
+    EXISTING_ANSIBLE_UID=$(id ansible -u); \
+    \
+    if [ "${EXISTING_ANSIBLE_GID}" != "${ANSIBLE_GID}" ]; then \
+      groupmod -g "${ANSIBLE_GID}" ansible && \
+      usermod -u "${ANSIBLE_UID}" -g "${ANSIBLE_GID}" ansible; \
+    fi; \
+    \
+    if [ "${SSH_INCLUDE_KEYS}" = "true" ]; then \
+      # Copy ssh key files into the root and ansible user .ssh directories
+      mkdir -p /root/.ssh && \
+      cp /tmp/root/.ssh/${SSH_KEYPAIR_ROOT_NAME}* /root/.ssh/; \
+      cp /tmp/root/.ssh/${SSH_KEYPAIR_ROOT_NAME}* /home/ansible/.ssh/; \
+      chown -R ansible:ansible /home/ansible; \
+    else \
+      # Remove .ssh directories to allow a volume mount at these locations
+      rmdir /home/ansible/.ssh; \
+    fi; \
+    \
+    rm -R /tmp/root;
+
+# Add a local user account
+
+# ARG ANSIBLE_LOCAL_GID=${ANSIBLE_LOCAL_GID:-1000}
+# ARG ANSIBLE_LOCAL_UID=${ANSIBLE_LOCAL_UID:-1000}
+# ARG ANSIBLE_LOCAL_USERNAME=${ANSIBLE_LOCAL_USERNAME:-goffinf}
+# ARG ANSIBLE_LOCAL_GROUPNAME=${ANSIBLE_LOCAL_GROUPNAME:-goffinf}
+
+# Add user and group
+# RUN set -eux \
+# 	&& addgroup -g ${ANSIBLE_LOCAL_GID} ${ANSIBLE_LOCAL_GROUPNAME} \
+# 	&& adduser -h /home/${ANSIBLE_LOCAL_USERNAME} -s /bin/bash -G ${ANSIBLE_LOCAL_GROUPNAME} -D -u ${ANSIBLE_LOCAL_UID} ${ANSIBLE_LOCAL_USERNAME} \
+# 	\
+#	&& mkdir /home/${ANSIBLE_LOCAL_USERNAME}/.gnupg \
+#	&& chown ${ANSIBLE_LOCAL_USERNAME}:${ANSIBLE_LOCAL_USERNAME} /home/${ANSIBLE_LOCAL_USERNAME}/.gnupg \
+#	&& chmod 0700 /home/${ANSIBLE_LOCAL_USERNAME}/.gnupg \
+#	\
+#	&& mkdir /home/${ANSIBLE_LOCAL_USERNAME}/.ssh \
+#	&& chown ${ANSIBLE_LOCAL_USERNAME}:${ANSIBLE_LOCAL_USERNAME} /home/${ANSIBLE_LOCAL_USERNAME}/.ssh \
+#	&& chmod 0700 /home/${ANSIBLE_LOCAL_USERNAME}/.ssh
+#
+#USER ${ANSIBLE_LOCAL_USERNAME}
+#
+#WORKDIR /home/${ANSIBLE_LOCAL_USERNAME}
+
+# Create the default ansible.cfg
+
+RUN mkdir /etc/ansible \
+  && ansible-config init --disabled -t all > /etc/ansible/ansible.cfg
+
+WORKDIR /home/${ANSIBLE_USERNAME}
+#WORKDIR /home/ansible
+
+# Install default roles and collections
+COPY ./requirements.yml .
+
+RUN mkdir /etc/ansible/roles \
+  && ansible-galaxy install -r requirements.yml --roles-path=/etc/ansible/roles --force-with-deps
+
+USER ${ANSIBLE_USERNAME}
+#USER ansible
+
+ENTRYPOINT []
+CMD ["sleep", "infinity"]

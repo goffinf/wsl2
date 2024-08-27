@@ -1,0 +1,9 @@
+---
+roles:
+- name: geerlingguy.git
+  version: 3.0.1
+
+collections:
+- name: community.general
+  version: 9.3.0
+  source: https://galaxy.ansible.com

@@ -1,0 +1,40 @@
+---
+ansible_ssh_private_key_file: ~/.ssh/id_rsa
+ansible_ssh_port: 22
+#ansible_ssh_port: 2849
+ansible_user: goffinf
+
+# Shared module vars
+ansible_install_method: pip
+
+docker_compose_version: v2.17.2
+
+docker_users:
+  - goffinf
+
+git_install_from_source: true
+git_install_from_source_force_update: true
+git_install_path: "/usr"
+git_version: "2.36.1"
+git_user_name: "goffinf"
+git_user_email: "goffinf@gmail.com"
+
+helm_version: v3.11.3
+
+kubectl_ver: v1.27.1
+
+nodejs_version: "14.x"
+
+packer_version: "1.8.6"
+
+pip_install_packages:
+  - name: docker
+
+security_fail2ban_enabled: false
+security_ssh_port: 22
+security_sudoers_passwordless:
+  - goffinf
+
+terraform_plugin_dir: /usr/local/share/terraform
+terraform_ver: 1.4.6
+terraform_log_level: TRACE
