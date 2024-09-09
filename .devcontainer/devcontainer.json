@@ -8,8 +8,14 @@
 	//	"dockerfile": "../ansible/Dockerfile-locale-nossh"
 	//}"
 	"dockerComposeFile": "../ansible/docker-compose-locale.yml",
-	"service": "sshkeys",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+	"service": "ansible-nossh",
+	"runServices": ["ansible-nossh"],
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/ansible"
+	//"containerUser": "ansible"
+	//"remoteUser": "ansible"
+	//"workspaceFolder": "/workspaces/ansible"
+	//"workspaceFolder": "/home/goffinf/wsl2"
+	//"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 	//"workspaceMount": "source=${localWorkspaceFolder},target=/c/Data/homelab/wsl2/ansible,type=bind",
 	//"workspaceFolder": "/c/Data/homelab/wsl2/ansible"
 
