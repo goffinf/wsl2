@@ -2,8 +2,6 @@ services:
   sshkeys:
     image: "goffinf/infra_ssh_files:000002"
     # image: "goffinf/infra_ssh_files:000003"
-    # profiles:
-    #- nossh
     container_name: "ssh-keys-locale"
     restart: "no"
     volumes:
@@ -13,24 +11,18 @@ services:
     # command: sleep infinity
   ansible-nossh:
     image: goffinf/ansible:nossh-locale-000001
-    # # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
-    # profiles:
-    # - nossh
+    # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
     container_name: "ansible-nossh-locale"
     restart: "unless-stopped"
-    #entrypoint: ["sleep", "infinity"]
-    #command: [ "sleep", "infinity" ]
+    # command: [ "sleep", "infinity" ]
     # user: ${ANSIBLE_USER:-ansible}
     user: root
     volumes:
-      # - /home/goffinf/.ssh:/root/.ssh:ro
-      # - /home/goffinf/.ssh:/home/ansible/.ssh:ro
+      # - /home/goffinf/.ssh:/root/.ssh
+      # - /home/goffinf/.ssh:/home/ansible/.ssh
       - ssh_keys_root_locale:/root/.ssh
       - ssh_keys_ansible_locale:/home/ansible/.ssh
       - ../..:/workspaces:cached
-      # - ssh_keys_ansible_locale:/home/goffinf/.ssh:ro
-      # - /c/Data/homelab/wsl2/ansible:/data
-      # - /c/Data/homelab/wsl2/ansible:/workspaces:cached
     #environment:
     #  USER: ${ANSIBLE_USER:-ansible}
     build:
