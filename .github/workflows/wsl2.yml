@@ -4,6 +4,9 @@ on:
     workflow_dispatch:
 jobs:
   configure_wsl2:
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
