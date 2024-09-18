@@ -1,6 +1,7 @@
 services:
   sshkeys:
-    image: "goffinf/infra_ssh_files:000002"
+    image: "ghcr.io/goffinf/infra_ssh_files:000002"
+    # image: "goffinf/infra_ssh_files:000002"
     # image: "goffinf/infra_ssh_files:000003"
     container_name: "ssh-keys-locale"
     restart: "no"
@@ -10,7 +11,8 @@ services:
       # - ../..:/workspaces:cached
     # command: sleep infinity
   ansible-nossh:
-    image: goffinf/ansible:nossh-locale-000001
+    image: "ghcr.io/goffinf/wsl2-config:0.1.0"
+    # image: goffinf/ansible:nossh-locale-000001
     # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
     container_name: "ansible-nossh-locale"
     restart: "unless-stopped"

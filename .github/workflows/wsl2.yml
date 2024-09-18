@@ -32,6 +32,30 @@ jobs:
         with:
           push: never
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.1.0"
-          # runCmd: pwd # /workspaces/wsl2/ansible
-          runCmd: ls -al
+          runCmd: ls -al /root/.ssh
           # runCmd: ansible --version
+
+# 🚀 Run command in container
+#   About to run devcontainer exec --workspace-folder /home/runner/work/wsl2/wsl2 --remote-env GITHUB_OUTPUT=/mnt/github/output --remote-env GITHUB_ENV=/mnt/github/env --remote-env GITHUB_PATH=/mnt/github/path --remote-env GITHUB_STEP_SUMMARY=/mnt/github/step-summary bash -c pwd
+#   /workspaces/wsl2/ansible
+          
+#           runCmd: ls -al
+
+# 🚀 Run command in container
+# About to run devcontainer exec --workspace-folder /home/runner/work/wsl2/wsl2 --remote-env GITHUB_OUTPUT=/mnt/github/output --remote-env GITHUB_ENV=/mnt/github/env --remote-env GITHUB_PATH=/mnt/github/path --remote-env GITHUB_STEP_SUMMARY=/mnt/github/step-summary bash -c ls -al
+# total 76
+# drwxr-xr-x    5 1001     127           4096 Sep 18 11:41 .
+# drwxr-xr-x    6 1001     127           4096 Sep 18 11:41 ..
+# -rw-r--r--    1 1001     127            478 Sep 18 11:41 .env
+# -rw-r--r--    1 1001     127           4048 Sep 18 11:41 Dockerfile-locale-nossh
+# -rw-r--r--    1 1001     127          19945 Sep 18 11:41 README.md
+# -rw-r--r--    1 1001     127            262 Sep 18 11:41 ansible.cfg
+# -rw-r--r--    1 1001     127           1775 Sep 18 11:41 docker-compose-locale copy.yml
+# -rw-r--r--    1 1001     127           1014 Sep 18 11:41 docker-compose-locale-ssh-test.yml
+# -rw-r--r--    1 1001     127           1469 Sep 18 11:41 docker-compose-locale.yml
+# drwxr-xr-x    2 1001     127           4096 Sep 18 11:41 files
+# drwxr-xr-x    2 1001     127           4096 Sep 18 11:41 group_vars
+# -rw-r--r--    1 1001     127            344 Sep 18 11:41 inventory.ini
+# -rw-r--r--    1 1001     127           3233 Sep 18 11:41 main.yml
+# -rw-r--r--    1 1001     127            228 Sep 18 11:41 requirements.yml
+# drwxr-xr-x    2 1001     127           4096 Sep 18 11:41 vars
