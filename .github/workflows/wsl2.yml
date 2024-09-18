@@ -32,4 +32,6 @@ jobs:
         with:
           push: never
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.1.0"
-          runCmd: ansible --version
+          runCmd: pwd
+          # runCmd: ls -al
+          # runCmd: ansible --version
