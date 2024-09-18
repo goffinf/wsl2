@@ -32,8 +32,13 @@ jobs:
         with:
           push: never
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.1.0"
-          runCmd: ls -al /root/.ssh
-          # runCmd: ansible --version
+          runCmd: |
+            pwd
+            ls -al /root/.ssh
+            ansible --version
+            docker info
+            docker image ls
+            docker volume ls
 
 # 🚀 Run command in container
 #   About to run devcontainer exec --workspace-folder /home/runner/work/wsl2/wsl2 --remote-env GITHUB_OUTPUT=/mnt/github/output --remote-env GITHUB_ENV=/mnt/github/env --remote-env GITHUB_PATH=/mnt/github/path --remote-env GITHUB_STEP_SUMMARY=/mnt/github/step-summary bash -c pwd
