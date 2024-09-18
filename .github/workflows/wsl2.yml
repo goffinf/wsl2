@@ -36,7 +36,8 @@ jobs:
             pwd
             ls -al /root/.ssh
             ansible --version
-            cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
+            ls -alR /home/runner/work/wsl2
+            # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
             # docker info
             # docker image ls
             # docker volume ls
