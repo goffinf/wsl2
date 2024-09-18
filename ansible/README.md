@@ -2,6 +2,7 @@
 
 - [Configure a WSL2 Instance using Automation](#configure-a-wsl2-instance-using-automation)
   - [Purpose](#purpose)
+  - [Run as a GitHub Actions Workflow](#run-as-a-github-actions-workflow)
   - [Start a Dev Container](#start-a-dev-container)
   - [Inside the Dev Container](#inside-the-dev-container)
   - [Ansible](#ansible)
@@ -24,11 +25,15 @@
 
 ## Purpose
 
-1. Configure a base Ubuntu WSL2 distro to use as a ***independant software development environment*** (IDP). The primary automation software used is **Ansible**.
+1. Automate the configuration of a Windows Sub-system for Linux (WSL2) distro to use as a ***independant software development platform*** (IDP). The primary automation software used is **Ansible**.
 
-1. To provide a simpler and more reproducble configuration, Ansible, and its dependencies will **NOT** be **installed** directly into the WSL instance, but instead will be run from a ***Dev Container***.
+2. To provide a simpler and more reproducble configuration, Ansible, and its dependencies will **NOT** be **installed** directly into the WSL instance, but instead will be run from a ***Dev Container***.
 
 [Goto Top](#configure-a-wsl2-instance-using-automation)
+
+## Run as a GitHub Actions Workflow
+
+TODO
 
 ## Start a Dev Container
 
@@ -62,6 +67,7 @@ Resolving deltas: 100% (16/16), done.
 
 cd wsl2
 ```
+[Goto Top](#configure-a-wsl2-instance-using-automation)
 
 4. Open VSCode
 
@@ -118,6 +124,9 @@ To **STOP** the dev container (it is not removed):
 
 Reopen folder in WSL
 ```
+
+[Goto Top](#configure-a-wsl2-instance-using-automation)
+
 ## Inside the Dev Container
 
 The terminal within VSCode is open in the **ansible** source code directory that is mapped to the dev container workspace:
@@ -155,6 +164,8 @@ volumes:
   - ../..:/workspaces:cached
 ```
 
+[Goto Top](#configure-a-wsl2-instance-using-automation)
+
 ## Ansible
 
 You can confirm that Ansible is available by checking the version:
@@ -172,6 +183,8 @@ ansible [core 2.13.13]
   jinja version = 3.1.4
   libyaml = True
 ```
+
+[Goto Top](#configure-a-wsl2-instance-using-automation)
 
 ### Inventory
 
@@ -192,6 +205,9 @@ For example, if the Windows hosts file looked like this:
 192.168.0.210  proxmox-002
 192.168.0.226  pi-hole
 ```
+
+[Goto Top](#configure-a-wsl2-instance-using-automation)
+
 From **within** the **dev container** I could reach any of the hostnames:
 
 ```
@@ -208,6 +224,8 @@ PING diskstation (192.168.0.16): 56 data bytes
 ...
 ```
 For this playbook we need to reach the WSL instance which in this case is declared as the hostname **wsl2.local**
+
+[Goto Top](#configure-a-wsl2-instance-using-automation)
 
 In the **inventory.ini** we can specify wsl2.local as a target like this:
 
@@ -249,6 +267,8 @@ ip a show eth0
 
 Now that the inventory is correct, its time to run the Ansible playbook.
 
+[Goto Top](#configure-a-wsl2-instance-using-automation)
+
 ### Playbook
 
 The Ansible playbook is declared within the ***main.yml** file.
@@ -262,6 +282,8 @@ ansible-playbook main.yml --check --diff
 # EXECUTE CHANGES
 ansible-playbook main.yml
 ```
+
+[Goto Top](#configure-a-wsl2-instance-using-automation)
 
 #### Example Run
 
@@ -310,6 +332,7 @@ PLAY RECAP *********************************************************************
 wsl2.local                 : ok=14   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
+[Goto Top](#configure-a-wsl2-instance-using-automation)
 
 ## Pre-Reqs
 
