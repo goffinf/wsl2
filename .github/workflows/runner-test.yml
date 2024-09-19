@@ -1,0 +1,29 @@
+name: Self Hosted Runner Test
+
+on:
+    workflow_dispatch:
+jobs:
+  test-self-hosted-runner:
+    permissions:
+      contents: read
+      packages: write
+    runs-on:
+      labels: wsl2
+    steps:
+      - name: job_start
+        run: |
+          echo "The Self Hosted Runner Test workflow has STARTED"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: GHCR_Login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: job_complete
+        run: |
+          echo "The Self Hosted Runner Test workflow has COMPLETED"
