@@ -8,114 +8,114 @@
   vars_files:
     - vars/all.yml
 
-  pre_tasks:
-  - name: Update apt cache
-    apt:
-      update_cache: yes
-      upgrade: yes
-      cache_valid_time: 3600
-      force_apt_get: yes
-    when: ansible_os_family == 'Debian'
+  # pre_tasks:
+  # - name: Update apt cache
+  #   apt:
+  #     update_cache: yes
+  #     upgrade: yes
+  #     cache_valid_time: 3600
+  #     force_apt_get: yes
+  #   when: ansible_os_family == 'Debian'
 
   tasks:
-  - name: Include OS-specific variables.
-    include_vars: "./vars/{{ ansible_os_family }}.yml"
+  # - name: Include OS-specific variables.
+  #   include_vars: "./vars/{{ ansible_os_family }}.yml"
 
-  - name: Install system packages
-    package:
-      name:
-        - ca-certificates
-        - nmap
-        - nfs-common
-        - net-tools
-        - jq
-        - libnss-myhostname
-        - openssh-server
-        - zip
-      state: present
+  # - name: Install system packages
+  #   package:
+  #     name:
+  #       - ca-certificates
+  #       - nmap
+  #       - nfs-common
+  #       - net-tools
+  #       - jq
+  #       - libnss-myhostname
+  #       - openssh-server
+  #       - zip
+  #     state: present
 
-  - name: Ensure ssh folder has correct permissions
-    file:
-      path: "/home/{{ ansible_user }}/.ssh"
-      state: directory
-      mode: "0700"
+  # - name: Ensure ssh folder has correct permissions
+  #   file:
+  #     path: "/home/{{ ansible_user }}/.ssh"
+  #     state: directory
+  #     mode: "0700"
 
-  - name: Remove existing known_hosts file from the ssh folder
-    file:
-      path: "/home/{{ ansible_user }}/.ssh/known_hosts"
-      state: absent
+  # - name: Remove existing known_hosts file from the ssh folder
+  #   file:
+  #     path: "/home/{{ ansible_user }}/.ssh/known_hosts"
+  #     state: absent
 
-  - name: Register all ssh folder files
-    find:
-      paths: "/home/{{ ansible_user }}/.ssh"
-      patterns: "*"
-    register: ssh_files
+  # - name: Register all ssh folder files
+  #   find:
+  #     paths: "/home/{{ ansible_user }}/.ssh"
+  #     patterns: "*"
+  #   register: ssh_files
 
-  - name: Ensure ssh folder files have correct permissions
-    file:
-      path: "{{ item.path }}"
-      state: file
-      mode: "0600"
-    with_items: "{{ ssh_files.files }}"
+  # - name: Ensure ssh folder files have correct permissions
+  #   file:
+  #     path: "{{ item.path }}"
+  #     state: file
+  #     mode: "0600"
+  #   with_items: "{{ ssh_files.files }}"
 
-  - name: Add wsl.conf
-    copy:
-      src: ./files/wsl.conf
-      dest: /etc/wsl.conf
-      mode: "0644"
+  # - name: Add wsl.conf
+  #   copy:
+  #     src: ./files/wsl.conf
+  #     dest: /etc/wsl.conf
+  #     mode: "0644"
 
-  - name: git global config
-    git_config:
-      name: "{{ item.name }}"
-      scope: global
-      value: "{{ item.value }}"
-    with_items:
-      - name: "user.name"
-        value: "{{ git_user_name }}"
-      - name: "user.email"
-        value: "{{ git_user_email }}"
-      # - name: "credential.helper"
-      #   value: "cache"
-      - name: "credential.helper"
-        value: "/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
-      # - name: "credential.helper"
-      #   value: "store"
-      # - name: "credential.helper"
-      #   value:
-      #     - "/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
-      #     - "cache"
-    #register: task_output
-    become: false
-    become_user: "{{ ansible_user }}"
+  # - name: git global config
+  #   git_config:
+  #     name: "{{ item.name }}"
+  #     scope: global
+  #     value: "{{ item.value }}"
+  #   with_items:
+  #     - name: "user.name"
+  #       value: "{{ git_user_name }}"
+  #     - name: "user.email"
+  #       value: "{{ git_user_email }}"
+  #     # - name: "credential.helper"
+  #     #   value: "cache"
+  #     - name: "credential.helper"
+  #       value: "/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
+  #     # - name: "credential.helper"
+  #     #   value: "store"
+  #     # - name: "credential.helper"
+  #     #   value:
+  #     #     - "/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
+  #     #     - "cache"
+  #   #register: task_output
+  #   become: false
+  #   become_user: "{{ ansible_user }}"
 
-  # - name: capture_git global config
-  #   ansible.builtin.command: cat "/home/{{ ansible_user }}/.gitconfig"
-  #   register: gitconfig
+  # # - name: capture_git global config
+  # #   ansible.builtin.command: cat "/home/{{ ansible_user }}/.gitconfig"
+  # #   register: gitconfig
 
-  # - name: show_gitconfig
-  #   debug:
-  #     msg: "{{ gitconfig.stdout }}"
+  # # - name: show_gitconfig
+  # #   debug:
+  # #     msg: "{{ gitconfig.stdout }}"
 
-  - name: "Configure sudoers to enable the ansible user ({{ ansible_user }}) to execute commands with escalated privileges and no password"
-    community.general.sudoers:
-      name: "{{ ansible_user }}_sudo"
-      user: "{{ ansible_user }}"
-      nopassword: true
-      state: present
-      commands:
-        - ALL
+  # - name: "Configure sudoers to enable the ansible user ({{ ansible_user }}) to execute commands with escalated privileges and no password"
+  #   community.general.sudoers:
+  #     name: "{{ ansible_user }}_sudo"
+  #     user: "{{ ansible_user }}"
+  #     nopassword: true
+  #     state: present
+  #     commands:
+  #       - ALL
 
-  - name: "Configure sudoers to enable the ansible user (ansible) to execute commands with escalated privileges and no password"
-    community.general.sudoers:
-      name: "ansible_sudo"
-      user: "ansible"
-      nopassword: true
-      state: present
-      commands:
-        - ALL
+  # - name: "Configure sudoers to enable the ansible user (ansible) to execute commands with escalated privileges and no password"
+  #   community.general.sudoers:
+  #     name: "ansible_sudo"
+  #     user: "ansible"
+  #     nopassword: true
+  #     state: present
+  #     commands:
+  #       - ALL
 
-  # - name: ping hosts
-  #   ansible.builtin.ping:
+  - name: ping hosts
+    ansible.builtin.ping:
 
   # - name: Look up A (IPv4) records for example.org
   #   ansible.builtin.debug:
