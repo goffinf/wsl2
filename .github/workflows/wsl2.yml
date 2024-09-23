@@ -7,9 +7,9 @@ jobs:
     permissions:
       contents: read
       packages: write
-    runs-on:
-      labels: wsl2
-    # runs-on: ubuntu-latest
+    # runs-on:
+    #   labels: wsl2
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,9 +36,9 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
-            ansible-playbook main.yml
+            # ansible-playbook main.yml
             # ls -al /root/.ssh
-            # ansible --version
+            ansible --version
             # ls -alR /home/
             # ls -alR /home/runner/work/wsl2
             # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
