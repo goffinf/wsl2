@@ -29,6 +29,11 @@ jobs:
       #     imageTag: "0.1.0"
       #     runCmd: ansible --version
 
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: RUN_devContainer
         uses: devcontainers/ci@v0.3
         with:
