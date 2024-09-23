@@ -20,6 +20,9 @@ ENV LANG=${LOCALE_LANG} \
     LC_ALL=${LOCALE_LANG}
 
 # Additional binaries
+# npm is NOT needed within the dev container image but DOES need to be installed on the GHA runner
+# bash DOES need to be installed and symlink inside the dev container image
+#       npm \
 RUN set -eux \
     && apk add --no-cache \
        bash \
@@ -27,7 +30,6 @@ RUN set -eux \
        curl \
        less \
        $MUSL_LOCALE_DEPS \
-       npm \
        shadow \
        sshpass \
        sudo \
