@@ -45,7 +45,7 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
-            git clone "${{ github.repository }}"
+            git clone "https://github.com/${{ github.repository }}.git"
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             echo "GITHUB_WORKSPACE = $env:GITHUB_WORKSPACE"
             ls -alR /tmp
