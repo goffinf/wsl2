@@ -45,7 +45,7 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
-            GITHUB_REPOSITORY=${{ github.repository }}"
+            GITHUB_REPOSITORY="${{ github.repository }}"
             echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
             GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
             echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
