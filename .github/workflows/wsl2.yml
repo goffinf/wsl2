@@ -41,6 +41,8 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
+            ls -alR /tmp
+            ls -alR /home/runner/work
             # ansible-playbook main.yml
             # ls -al /root/.ssh
             ansible --version
