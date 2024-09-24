@@ -43,7 +43,7 @@ jobs:
             pwd
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             echo "GITHUB_WORKSPACE = $env:GITHUB_WORKSPACE"
-            ls -alR /tmp
+            ls -alR /tmp/runner
             ls -alR /home/ansible
             # ls -alR /home/runner/work
             # ansible-playbook main.yml
