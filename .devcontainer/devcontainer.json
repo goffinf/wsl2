@@ -10,7 +10,7 @@
 	"dockerComposeFile": "../ansible/docker-compose-locale.yml",
 	"service": "ansible-nossh",
 	"runServices": ["ansible-nossh"],
-	"workspaceFolder": "/tmp"
+	"workspaceFolder": "/home/ansible"
 	// "workspaceFolder": "/home/runner/work/wsl2/wsl2"
 	// "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/ansible"
 	//"containerUser": "ansible"
