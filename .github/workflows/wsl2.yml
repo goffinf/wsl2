@@ -57,9 +57,10 @@ jobs:
             # ansible-playbook main.yml
             # ls -al /root/.ssh
             ansible --version
-            cd "/tmp/${$GITHUB_REPOSITORY_NAME}/ansible"
+            cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
             pwd
             ls -al
+            cat /etc/hosts
             # ansible-playbook main.yml
             # ls -alR /home/
             # ls -alR /home/runner/work/wsl2
