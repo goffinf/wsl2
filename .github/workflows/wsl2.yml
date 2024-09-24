@@ -42,7 +42,8 @@ jobs:
           runCmd: |
             pwd
             ls -alR /tmp
-            ls -alR /home/runner/work
+            ls -alR /
+            # ls -alR /home/runner/work
             # ansible-playbook main.yml
             # ls -al /root/.ssh
             ansible --version
