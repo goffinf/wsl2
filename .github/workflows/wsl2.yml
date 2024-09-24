@@ -45,13 +45,14 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
+            ls -alR /tmp
             GITHUB_REPOSITORY="${{ github.repository }}"
             echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
             GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
             echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             git clone "https://github.com/${GITHUB_REPOSITORY}.git"
-            # ls -alR /tmp
+            ls -alR /tmp
             # ls -alR /home/ansible
             # ls -alR /home/runner/work
             # ansible-playbook main.yml
