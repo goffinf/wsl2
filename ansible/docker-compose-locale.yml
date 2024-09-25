@@ -15,6 +15,7 @@ services:
     # image: goffinf/ansible:nossh-locale-000001
     # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
     container_name: "ansible-nossh-locale"
+    # restart: "no"
     restart: "unless-stopped"
     # command: [ "sleep", "infinity" ]
     # user: ${ANSIBLE_USER:-ansible}
