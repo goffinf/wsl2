@@ -45,6 +45,7 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
+            mkdir -p /tmp/wsl2/ansible
             # ls -alR /tmp
             GITHUB_REPOSITORY="${{ github.repository }}"
             echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
