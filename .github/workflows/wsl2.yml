@@ -63,7 +63,7 @@ jobs:
             # pwd
             # ls -al
             cat /etc/hosts
-            ansible-playbook main.yml
+            # ansible-playbook main.yml
             # ls -alR /home/
             # ls -alR /home/runner/work/wsl2
             # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
