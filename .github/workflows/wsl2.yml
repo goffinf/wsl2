@@ -53,7 +53,7 @@ jobs:
             echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             git clone "https://github.com/${GITHUB_REPOSITORY}.git"
-            cd "${GITHUB_REPOSITORY}/ansible"
+            cd "${GITHUB_REPOSITORY_NAME}/ansible"
             ls -al
             # ls -alR /tmp
             # ls -alR /home/ansible
