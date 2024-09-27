@@ -76,11 +76,13 @@ jobs:
             # docker info
             # docker image ls
             # docker volume ls
+            echo "Removing git repo"
+            rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 
-      - name: Clean up repo
-        run: |
-          echo "Removing git repo"
-          rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
+      # - name: Clean up repo
+      #   run: |
+      #     echo "Removing git repo"
+      #     rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 
 # 🚀 Run command in container
 #   About to run devcontainer exec --workspace-folder /home/runner/work/wsl2/wsl2 --remote-env GITHUB_OUTPUT=/mnt/github/output --remote-env GITHUB_ENV=/mnt/github/env --remote-env GITHUB_PATH=/mnt/github/path --remote-env GITHUB_STEP_SUMMARY=/mnt/github/step-summary bash -c pwd
