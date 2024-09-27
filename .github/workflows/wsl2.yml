@@ -54,6 +54,8 @@ jobs:
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             git clone "https://github.com/${GITHUB_REPOSITORY}.git"
             cd "${GITHUB_REPOSITORY_NAME}/ansible"
+            cat inventory.ini
+            cat docker-compose-locale.yml
             ls -al
             # ls -alR /tmp
             # ls -alR /home/ansible
@@ -65,8 +67,8 @@ jobs:
             # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
             # pwd
             # ls -al
-            cat /etc/hosts
-            ansible-playbook main.yml
+            # cat /etc/hosts
+            # ansible-playbook main.yml
             # ls -alR /home/
             # ls -alR /home/runner/work/wsl2
             # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml

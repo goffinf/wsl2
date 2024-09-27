@@ -8,11 +8,11 @@
 	//	"dockerfile": "../ansible/Dockerfile-locale-nossh"
 	//}"
 	"dockerComposeFile": "../ansible/docker-compose-locale.yml",
-	"service": "ansible-nossh",
-	"runServices": ["ansible-nossh"],
-	"workspaceFolder": "/workspaces",
+	"service": "ansible",
+	"runServices": ["ansible"],
+	"workspaceFolder": "/workspaces"
 	// "workspaceFolder": "/tmp",
-	"mounts": [{"source": "ssh_keys_root_locale", "target": "/root/.ssh", "type": "volume"}, {"source": "ssh_keys_ansible_locale", "target": "/home/ansible/.ssh", "type": "volume"}]
+	// "mounts": [{"source": "ssh_keys_root_locale", "target": "/root/.ssh", "type": "volume"}, {"source": "ssh_keys_ansible_locale", "target": "/home/ansible/.ssh", "type": "volume"}]
 	// "workspaceFolder": "/tmp/wsl2/ansible"
 	// "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/ansible"
 	//"containerUser": "ansible"

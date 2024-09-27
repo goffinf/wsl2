@@ -10,7 +10,7 @@ services:
   #     - ssh_keys_ansible_locale:/home/ansible/.ssh:ro
   #     # - ../..:/workspaces:cached
   #   # command: sleep infinity
-  ansible-nossh:
+  ansible:
     image: "ghcr.io/goffinf/wsl2-config:0.2.0"
     # image: goffinf/ansible:nossh-locale-000001
     # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
