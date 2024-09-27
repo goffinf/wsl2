@@ -11,8 +11,8 @@ services:
   #     # - ../..:/workspaces:cached
   #   # command: sleep infinity
   ansible:
-    image: "ghcr.io/goffinf/wsl2-config:0.3.0"
-    # image: "ghcr.io/goffinf/wsl2-config:0.2.0"
+    image: "ghcr.io/goffinf/wsl2-config:0.2.0"
+    # image: "ghcr.io/goffinf/wsl2-config:0.3.0"
     # image: goffinf/ansible:nossh-locale-000001
     # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
     container_name: "ansible-nossh-locale"
