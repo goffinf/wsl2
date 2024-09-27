@@ -45,9 +45,9 @@ services:
 volumes:
   ssh_keys_root_locale:
     external: true
-    name: ansible_ssh_keys_ansible_locale
+    name: ansible_ssh_keys
   ssh_keys_ansible_locale:
     external: true
-    name: ansible_ssh_keys_root_locale
+    name: ansible_ssh_keys
   # ssh_keys_root_locale:
   # ssh_keys_ansible_locale:
