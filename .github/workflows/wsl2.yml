@@ -54,10 +54,10 @@ jobs:
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
             # git clone "https://github.com/${GITHUB_REPOSITORY}.git"
             # ls -alR /tmp
-            # ls -alR /home/ansible
+            ls -alR /home/ansible
             # ls -alR /home/runner/work
             # ansible-playbook main.yml
-            # ls -al /root/.ssh
+            ls -al /root/.ssh
             ls -al
             ansible --version
             # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
