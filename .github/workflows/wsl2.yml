@@ -52,19 +52,21 @@ jobs:
             GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
             echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
             echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
-            # git clone "https://github.com/${GITHUB_REPOSITORY}.git"
+            git clone "https://github.com/${GITHUB_REPOSITORY}.git"
+            cd "${GITHUB_REPOSITORY}/ansible"
+            ls -al
             # ls -alR /tmp
-            ls -alR /home/ansible
+            # ls -alR /home/ansible
             # ls -alR /home/runner/work
             # ansible-playbook main.yml
-            ls -al /root/.ssh
-            ls -al
+            # ls -al /root/.ssh
+            # ls -al
             ansible --version
             # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
             # pwd
             # ls -al
             cat /etc/hosts
-            # ansible-playbook main.yml
+            ansible-playbook main.yml
             # ls -alR /home/
             # ls -alR /home/runner/work/wsl2
             # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
