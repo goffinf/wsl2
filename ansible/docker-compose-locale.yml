@@ -1,15 +1,15 @@
 services:
-  sshkeys:
-    image: "ghcr.io/goffinf/infra_ssh_files:000002"
-    # image: "goffinf/infra_ssh_files:000002"
-    # image: "goffinf/infra_ssh_files:000003"
-    container_name: "ssh-keys-locale"
-    restart: "no"
-    volumes:
-      - ssh_keys_root_locale:/root/.ssh:ro
-      - ssh_keys_ansible_locale:/home/ansible/.ssh:ro
-      # - ../..:/workspaces:cached
-    # command: sleep infinity
+  # sshkeys:
+  #   image: "ghcr.io/goffinf/infra_ssh_files:000002"
+  #   # image: "goffinf/infra_ssh_files:000002"
+  #   # image: "goffinf/infra_ssh_files:000003"
+  #   container_name: "ssh-keys-locale"
+  #   restart: "no"
+  #   volumes:
+  #     - ssh_keys_root_locale:/root/.ssh:ro
+  #     - ssh_keys_ansible_locale:/home/ansible/.ssh:ro
+  #     # - ../..:/workspaces:cached
+  #   # command: sleep infinity
   ansible-nossh:
     image: "ghcr.io/goffinf/wsl2-config:0.2.0"
     # image: goffinf/ansible:nossh-locale-000001
@@ -44,4 +44,10 @@ services:
     working_dir: /data
 volumes:
   ssh_keys_root_locale:
+    external: true
+    name: ansible_ssh_keys_ansible_locale
   ssh_keys_ansible_locale:
+    external: true
+    name: ansible_ssh_keys_root_locale
+  # ssh_keys_root_locale:
+  # ssh_keys_ansible_locale:
