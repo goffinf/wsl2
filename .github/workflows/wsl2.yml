@@ -42,7 +42,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           push: never
-          cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
+          cacheFrom: "ghcr.io/goffinf/wsl2-config:0.3.0"
           runCmd: |
             pwd
             # mkdir -p /tmp/wsl2/ansible

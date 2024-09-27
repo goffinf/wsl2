@@ -121,5 +121,5 @@ RUN mkdir /etc/ansible/roles \
 USER ${ANSIBLE_USERNAME}
 #USER ansible
 
-ENTRYPOINT []
-CMD ["sleep", "infinity"]
+# ENTRYPOINT []
+# CMD ["sleep", "infinity"]
