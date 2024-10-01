@@ -27,9 +27,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Show checkout contents
-      #   run: |
-      #     ls -alR ${{ github.workspace }}
+      - name: Show checkout contents
+        run: |
+          ls -alR ${{ github.workspace }}
 
       - name: GHCR_Login
         uses: docker/login-action@v3
