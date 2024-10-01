@@ -1,0 +1,13 @@
+services:
+  sshkeys:
+    # image: "goffinf/infra_ssh_files:000002"
+    # image: "goffinf/infra_ssh_files:000003"
+    image: "ghcr.io/goffinf/infra_ssh_files:000002"
+    container_name: "ansible-ssh-keys"
+    restart: "no"
+    volumes:
+      - ansible_ssh_keys:/home/ansible/.ssh:ro
+    # command: sleep infinity
+volumes:
+  ansible_ssh_keys:
+    name: ansible_ssh_keys_test
