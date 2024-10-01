@@ -48,6 +48,7 @@ jobs:
       - name: create_ansible_ssh_keys_volume
         id: create_ansible_ssh_keys_volume
         run: |
+          docker volume ls
           # check volume doesn't already exist
           VOL=$(docker volume ls -f name=${{ inputs.ansible_ssh_keys_volume_name }} --format='{{.Name}}')
           echo "VOL = $VOL"
