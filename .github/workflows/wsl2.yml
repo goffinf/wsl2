@@ -57,7 +57,7 @@ jobs:
             #docker compose -f docker-compose-ansible-ssh-keys.yml up -d
           else
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} already exists"
-            if [ ${{ inputs.ansible_ssh_keys_volume_recreate }} == 'true' ]
+            if [ ${{ inputs.ansible_ssh_keys_volume_recreate }} == 'true' ]; then
               echo "re-creating the docker volume ${{ inputs.ansible_ssh_keys_volume_name }}"
               #docker volume rm ${{ inputs.ansible_ssh_keys_volume_name }} || true
               #docker compose -f docker-compose-ansible-ssh-keys.yml up -d
