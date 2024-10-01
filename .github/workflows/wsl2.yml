@@ -1,7 +1,20 @@
 name: WSL Config
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      ansible_ssh_keys_volume_recreate:
+        description: "Whether to recrate the ansible ssh_keys volume"
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+        default: 'false'
+      ansible_ssh_keys_volume_name:
+        description: "The name of docker volume from which ssh_keys will be provided"
+        required: false
+        type: string
+        default: "ansible_ssh_keys"
 jobs:
   configure_wsl2:
     permissions:
@@ -14,9 +27,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show checkout contents
-        run: |
-          ls -alR ${{ github.workspace }}
+      # - name: Show checkout contents
+      #   run: |
+      #     ls -alR ${{ github.workspace }}
 
       - name: GHCR_Login
         uses: docker/login-action@v3
@@ -24,7 +37,26 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - name: recreate_ansible_ssh_keys_volume
+        id: recreate_ansible_ssh_keys_volume
+        if: inputs.ansible_ssh_keys_volume_recreate == 'true'
+        run: |
+          echo "Removing docker volume ${{ inputs.ansible_ssh_keys_volume_name }}"
+          docker volume rm ${{ inputs.ansible_ssh_keys_volume_name }} || true
+
+      - name: create_ansible_ssh_keys_volume
+        id: create_ansible_ssh_keys_volume
+        run: |
+          # check volume doesn't already exist
+          VOL=$(docker volume ls -f name=${{ inputs.ansible_ssh_keys_volume_name }} --format='{{.Name}}')
+          echo "VOL = $VOL"
+          if [ -z "$VOL" ]; then
+            echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} does NOT exist"
+          else
+            echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} exists"
+          fi;
+
       # - name: BUILD_and_RUN_devContainer
       #   uses: devcontainers/ci@v0.3
       #   with:
@@ -33,51 +65,51 @@ jobs:
       #     imageTag: "0.1.0"
       #     runCmd: ansible --version
 
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      # - name: Install Node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 18
 
-      - name: RUN_devContainer
-        uses: devcontainers/ci@v0.3
-        with:
-          push: never
-          cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
-          runCmd: |
-            pwd
-            # mkdir -p /tmp/wsl2/ansible
-            # ls -alR /tmp
-            GITHUB_REPOSITORY="${{ github.repository }}"
-            echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
-            GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
-            echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
-            echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
-            cd /tmp
-            git clone "https://github.com/${GITHUB_REPOSITORY}.git"
-            cd "${GITHUB_REPOSITORY_NAME}/ansible"
-            cat inventory.ini
-            cat docker-compose-locale.yml
-            ls -al
-            # ls -alR /tmp
-            # ls -alR /home/ansible
-            # ls -alR /home/runner/work
-            # ansible-playbook main.yml
-            # ls -al /root/.ssh
-            # ls -al
-            ansible --version
-            # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
-            # pwd
-            # ls -al
-            # cat /etc/hosts
-            ansible-playbook main.yml
-            # ls -alR /home/
-            # ls -alR /home/runner/work/wsl2
-            # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
-            # docker info
-            # docker image ls
-            # docker volume ls
-            echo "Removing git repo"
-            rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
+      # - name: RUN_devContainer
+      #   uses: devcontainers/ci@v0.3
+      #   with:
+      #     push: never
+      #     cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
+      #     runCmd: |
+      #       pwd
+      #       # mkdir -p /tmp/wsl2/ansible
+      #       # ls -alR /tmp
+      #       GITHUB_REPOSITORY="${{ github.repository }}"
+      #       echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
+      #       GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
+      #       echo "GITHUB_REPOSITORY_NAME = $GITHUB_REPOSITORY_NAME"
+      #       echo "GITHUB_WORKSPACE = ${{ github.workspace }}"
+      #       cd /tmp
+      #       git clone "https://github.com/${GITHUB_REPOSITORY}.git"
+      #       cd "${GITHUB_REPOSITORY_NAME}/ansible"
+      #       cat inventory.ini
+      #       cat docker-compose-locale.yml
+      #       ls -al
+      #       # ls -alR /tmp
+      #       # ls -alR /home/ansible
+      #       # ls -alR /home/runner/work
+      #       # ansible-playbook main.yml
+      #       # ls -al /root/.ssh
+      #       # ls -al
+      #       ansible --version
+      #       # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
+      #       # pwd
+      #       # ls -al
+      #       # cat /etc/hosts
+      #       ansible-playbook main.yml
+      #       # ls -alR /home/
+      #       # ls -alR /home/runner/work/wsl2
+      #       # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
+      #       # docker info
+      #       # docker image ls
+      #       # docker volume ls
+      #       echo "Removing git repo"
+      #       rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 
       # - name: Clean up repo
       #   run: |
