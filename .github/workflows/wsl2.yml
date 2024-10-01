@@ -54,14 +54,14 @@ jobs:
           echo "VOL = $VOL"
           if [ -z "$VOL" ]; then
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} does NOT exist ... creating"
-            docker compose -f docker-compose-ansible-ssh-keys.yml up -d
+            docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml up -d
           else
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} already exists"
             if [ ${{ inputs.ansible_ssh_keys_volume_recreate }} == 'true' ]; then
               echo "re-creating the docker volume ${{ inputs.ansible_ssh_keys_volume_name }}"
               # docker volume rm ${{ inputs.ansible_ssh_keys_volume_name }} || true
-              docker compose -f docker-compose-ansible-ssh-keys.yml down -v
-              docker compose -f docker-compose-ansible-ssh-keys.yml up -d
+              docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml down -v
+              docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml up -d
             fi
           fi;
           docker volume ls
