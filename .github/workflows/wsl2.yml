@@ -64,6 +64,7 @@ jobs:
               docker compose -f docker-compose-ansible-ssh-keys.yml up -d
             fi
           fi;
+          docker volume ls
 
       # - name: BUILD_and_RUN_devContainer
       #   uses: devcontainers/ci@v0.3
