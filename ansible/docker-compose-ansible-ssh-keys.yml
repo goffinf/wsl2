@@ -9,6 +9,7 @@ services:
       - ansible_ssh_keys_ansible:/home/ansible/.ssh:ro
       - ansible_ssh_keys_root:/root/.ssh:ro
     # command: sleep infinity
+    network_mode: none
 volumes:
   ansible_ssh_keys_ansible:
     name: ansible_ssh_keys_test_ansible
