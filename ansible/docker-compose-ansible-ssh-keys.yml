@@ -12,6 +12,6 @@ services:
     network_mode: none
 volumes:
   ansible_ssh_keys_ansible:
-    name: ansible_ssh_keys_test_ansible
+    name: ansible_ssh_keys_ansible
   ansible_ssh_keys_root:
-    name: ansible_ssh_keys_test_root
+    name: ansible_ssh_keys_root
