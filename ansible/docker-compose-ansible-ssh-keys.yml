@@ -11,6 +11,6 @@ services:
     # command: sleep infinity
 volumes:
   ansible_ssh_keys_ansible:
-    name: ansible_ssh_keys_ansible_test
+    name: ansible_ssh_keys_test_ansible
   ansible_ssh_keys_root:
-    name: ansible_ssh_keys_root_test
+    name: ansible_ssh_keys_test_root

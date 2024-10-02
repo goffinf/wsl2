@@ -11,10 +11,10 @@ on:
           - 'false'
         default: 'false'
       ansible_ssh_keys_volume_name:
-        description: "The name of docker volume from which ssh_keys will be provided"
+        description: "The name of docker volume from which Ansible ssh_keys will be provided"
         required: false
         type: string
-        default: "ansible_ssh_keys_test"
+        default: "ansible_ssh_keys_test_ansible"
 jobs:
   configure_wsl2:
     permissions:
