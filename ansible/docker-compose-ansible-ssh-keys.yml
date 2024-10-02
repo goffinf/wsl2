@@ -6,8 +6,11 @@ services:
     container_name: "ansible-ssh-keys"
     restart: "no"
     volumes:
-      - ansible_ssh_keys:/home/ansible/.ssh:ro
+      - ansible_ssh_keys_ansible:/home/ansible/.ssh:ro
+      - ansible_ssh_keys_root:/root/.ssh:ro
     # command: sleep infinity
 volumes:
-  ansible_ssh_keys:
-    name: ansible_ssh_keys_test
+  ansible_ssh_keys_ansible:
+    name: ansible_ssh_keys_ansible_test
+  ansible_ssh_keys_root:
+    name: ansible_ssh_keys_root_test
