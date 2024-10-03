@@ -15,6 +15,13 @@ on:
         required: false
         type: string
         default: "ansible_ssh_keys_ansible"
+      ansible_debug_mode:
+          description: "Run Ansible with --check --diff"
+          type: choice
+          options:
+            - 'true'
+            - 'false'
+          default: 'false'
 jobs:
   configure_wsl2:
     permissions:
@@ -101,8 +108,13 @@ jobs:
             ls -al
             echo "Show Anisible version"
             ansible --version
-            echo "Run the Ansible playbook"
-            ansible-playbook main.yml
+            if [ ${{ inputs.ansible_debug_mode }} == 'true' ]; then
+              echo "Running the Ansible playbook in debug mode"
+              ansible-playbook main.yml --check --diff
+            else
+              echo "Running the Ansible playbook"
+              ansible-playbook main.yml
+            fi
             echo "Removing git repo"
             rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 
