@@ -97,7 +97,7 @@
       msg: "{{ gitconfig.stdout }}"
 
   - name: show_host_ip
-    ansible.builtin.command: cat "ip a show eth0"
+    ansible.builtin.command: "ip a show eth0"
     register: hostip
 
   - name: show_hostip
