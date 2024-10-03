@@ -90,8 +90,6 @@ jobs:
           cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
           runCmd: |
             pwd
-            # mkdir -p /tmp/wsl2/ansible
-            # ls -alR /tmp
             GITHUB_REPOSITORY="${{ github.repository }}"
             echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
             GITHUB_REPOSITORY_NAME="${GITHUB_REPOSITORY#*/}"
@@ -100,27 +98,11 @@ jobs:
             cd /tmp
             git clone "https://github.com/${GITHUB_REPOSITORY}.git"
             cd "${GITHUB_REPOSITORY_NAME}/ansible"
-            cat inventory.ini
-            cat docker-compose-locale.yml
             ls -al
-            # ls -alR /tmp
-            # ls -alR /home/ansible
-            # ls -alR /home/runner/work
-            # ansible-playbook main.yml
-            # ls -al /root/.ssh
-            # ls -al
+            echo "Show Anisible version"
             ansible --version
-            # cd "/tmp/${GITHUB_REPOSITORY_NAME}/ansible"
-            # pwd
-            # ls -al
-            # cat /etc/hosts
+            echo "Run the Ansible playbook"
             ansible-playbook main.yml
-            # ls -alR /home/
-            # ls -alR /home/runner/work/wsl2
-            # cat /home/runner/work/wsl2/wsl2/ansible/docker-compose-locale.yml
-            # docker info
-            # docker image ls
-            # docker volume ls
             echo "Removing git repo"
             rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 

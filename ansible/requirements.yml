@@ -8,6 +8,6 @@ collections:
   version: 9.3.0
   source: https://galaxy.ansible.com
 
-# - name: community.dns
-#   version: 3.0.4
-#   source: https://galaxy.ansible.com
+- name: community.dns
+  version: 3.0.4
+  source: https://galaxy.ansible.com
