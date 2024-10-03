@@ -22,6 +22,16 @@ on:
             - 'true'
             - 'false'
           default: 'false'
+      dev_container_image_name:
+        description: "The NAME of the dev container image"
+        required: false
+        type: string
+        default: "ghcr.io/goffinf/wsl2-config"
+      dev_container_image_version:
+        description: "The VERSION of the dev container image"
+        required: false
+        type: string
+        default: "0.4.0"
 jobs:
   configure_wsl2:
     permissions:
@@ -94,7 +104,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           push: never
-          cacheFrom: "ghcr.io/goffinf/wsl2-config:0.2.0"
+          cacheFrom: "${{ inputs.dev_container_image_name }}:${{ inputs.dev_container_image_version }}"
           runCmd: |
             pwd
             GITHUB_REPOSITORY="${{ github.repository }}"

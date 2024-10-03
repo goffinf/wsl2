@@ -11,7 +11,8 @@ services:
   #     # - ../..:/workspaces:cached
   #   # command: sleep infinity
   ansible:
-    image: "ghcr.io/goffinf/wsl2-config:0.2.0"
+    image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
+    # image: "ghcr.io/goffinf/wsl2-config:0.2.0"
     # image: "ghcr.io/goffinf/wsl2-config:0.3.0"
     # image: goffinf/ansible:nossh-locale-000001
     # image: goffinf/ansible:nossh-locale-${ANSIBLE_BUILD_ID}
@@ -36,6 +37,7 @@ services:
         ANSIBLE_GID: ${ANSIBLE_GID}
         ANSIBLE_UID: ${ANSIBLE_UID}
         ANSIBLE_USERNAME: ${ANSIBLE_USERNAME}
+        ANSIBLE_BUILD_ID: ${ANSIBLE_BUILD_ID}
         CYTOPIA_IMAGE_TAG: ${CYTOPIA_IMAGE_TAG}
         GOFFINF_SSH_FILES_IMAGE_TAG: ${GOFFINF_SSH_FILES_IMAGE_TAG}
         LOCALE_LANG: ${LOCALE_LANG}
@@ -43,6 +45,7 @@ services:
         SSH_INCLUDE_KEYS: false
         SSH_KEYPAIR_ROOT_NAME: ${SSH_KEYPAIR_ROOT_NAME}
     working_dir: /data
+    network_mode: none
 volumes:
   ansible_ssh_keys_root:
     external: true
