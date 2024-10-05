@@ -10,14 +10,14 @@
 	"dockerComposeFile": "../ansible/docker-compose-locale.yml",
 	"service": "ansible",
 	"runServices": ["ansible"],
-	"workspaceFolder": "/workspaces"
+	//"workspaceFolder": "/workspaces"
 	// "workspaceFolder": "/tmp",
 	// "mounts": [{"source": "ssh_keys_root_locale", "target": "/root/.ssh", "type": "volume"}, {"source": "ssh_keys_ansible_locale", "target": "/home/ansible/.ssh", "type": "volume"}]
 	// "workspaceFolder": "/tmp/wsl2/ansible"
 	// "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/ansible"
 	//"containerUser": "ansible"
 	//"remoteUser": "ansible"
-	//"workspaceFolder": "/workspaces/ansible"
+	"workspaceFolder": "/workspaces/wsl2/ansible"
 	//"workspaceFolder": "/home/goffinf/wsl2"
 	//"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 	//"workspaceMount": "source=${localWorkspaceFolder},target=/c/Data/homelab/wsl2/ansible,type=bind",

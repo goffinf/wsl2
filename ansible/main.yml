@@ -88,21 +88,21 @@
     become: false
     become_user: "{{ ansible_user }}"
 
-  - name: capture_git global config
-    ansible.builtin.command: cat "/home/{{ ansible_user }}/.gitconfig"
-    register: gitconfig
+  # - name: capture_git global config
+  #   ansible.builtin.command: cat "/home/{{ ansible_user }}/.gitconfig"
+  #   register: gitconfig
 
-  - name: show_gitconfig
-    debug:
-      msg: "{{ gitconfig.stdout }}"
+  # - name: show_gitconfig
+  #   debug:
+  #     msg: "{{ gitconfig.stdout }}"
 
-  - name: show_host_ip
-    ansible.builtin.command: "ip a show eth0"
-    register: hostip
+  # - name: show_host_ip
+  #   ansible.builtin.command: "ip a show eth0"
+  #   register: hostip
 
-  - name: show_hostip
-    debug:
-      msg: "{{ hostip.stdout }}"
+  # - name: show_hostip
+  #   debug:
+  #     msg: "{{ hostip.stdout }}"
 
   - name: "Configure sudoers to enable the ansible user ({{ ansible_user }}) to execute commands with escalated privileges and no password"
     community.general.sudoers:
