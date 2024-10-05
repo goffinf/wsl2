@@ -105,6 +105,7 @@ jobs:
         with:
           push: never
           cacheFrom: "${{ inputs.dev_container_image_name }}:${{ inputs.dev_container_image_version }}"
+          configFile: "./.devcontainer/gha/devcontainer.json"
           runCmd: |
             pwd
             GITHUB_REPOSITORY="${{ github.repository }}"
