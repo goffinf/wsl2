@@ -1,0 +1,33 @@
+services:
+  terraform:
+    image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
+    container_name: "terraform"
+    restart: "unless-stopped"
+    command: [ "sleep", "infinity" ]
+    # user: ${ANSIBLE_USER:-ansible}
+    user: root
+    # volumes:
+    #   # - /home/goffinf/.ssh:/root/.ssh
+    #   # - /home/goffinf/.ssh:/home/ansible/.ssh
+    #   - ansible_ssh_keys_root:/root/.ssh
+    #   - ansible_ssh_keys_ansible:/home/ansible/.ssh
+    #   - ../..:/workspaces:cached
+    #environment:
+    #  USER: ${ANSIBLE_USER:-ansible}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ALPINE_BASE_IMAGE_TAG: ${ALPINE_BASE_IMAGE_TAG}
+        TERRAFORM_VERSION: ${TERRAFORM_VERSION}
+        TERRAFORM_MIRROR_FILENAME: ${TERRAFORM_MIRROR_FILENAME}
+        MAINTAINER: ${MAINTAINER}
+    # working_dir: /data
+    network_mode: none
+# volumes:
+#   ansible_ssh_keys_root:
+#     external: true
+#     name: ansible_ssh_keys_root
+#   ansible_ssh_keys_ansible:
+#     external: true
+#     name: ansible_ssh_keys_ansible
