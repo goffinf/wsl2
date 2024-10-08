@@ -2,18 +2,14 @@ services:
   terraform:
     image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
     container_name: "terraform"
-    restart: "unless-stopped"
-    command: [ "sleep", "infinity" ]
+    restart: "no"
+    # restart: "unless-stopped"
+    # command: [ "sleep", "infinity" ]
     # user: ${ANSIBLE_USER:-ansible}
     user: root
-    # volumes:
-    #   # - /home/goffinf/.ssh:/root/.ssh
-    #   # - /home/goffinf/.ssh:/home/ansible/.ssh
-    #   - ansible_ssh_keys_root:/root/.ssh
-    #   - ansible_ssh_keys_ansible:/home/ansible/.ssh
-    #   - ../..:/workspaces:cached
-    #environment:
-    #  USER: ${ANSIBLE_USER:-ansible}
+    volumes:
+      - terraform_cli:/terraform
+      - terraform_providers:/usr/share/terraform/plugins
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,12 +18,26 @@ services:
         TERRAFORM_VERSION: ${TERRAFORM_VERSION}
         TERRAFORM_MIRROR_FILENAME: ${TERRAFORM_MIRROR_FILENAME}
         MAINTAINER: ${MAINTAINER}
-    # working_dir: /data
     network_mode: none
-# volumes:
-#   ansible_ssh_keys_root:
-#     external: true
-#     name: ansible_ssh_keys_root
-#   ansible_ssh_keys_ansible:
-#     external: true
-#     name: ansible_ssh_keys_ansible
+  terraform_test:
+    image: "alpine:latest"
+    container_name: "terraform-test"
+    restart: "unless-stopped"
+    # command:
+    #   - /bin/sh
+    #   - -c
+    #   - |
+    #     echo "Copying Terraform CLi and providers"
+    #     cp /terraform/terraform /usr/local/bin/terraform
+    #     cp -Rf /usr/share/terraform/plugins /usr/local/share/terraform
+    command: [ "sleep", "infinity" ]
+    user: root
+    volumes:
+      - terraform_cli:/usr/local/bin
+      - terraform_providers:/usr/local/share/terraform/plugins
+    network_mode: none
+volumes:
+  terraform_cli:
+    name: terraform_cli
+  terraform_providers:
+    name: terraform_providers

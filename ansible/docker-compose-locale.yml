@@ -1,4 +1,22 @@
 services:
+  terraform:
+    image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
+    container_name: "terraform"
+    restart: "unless-stopped"
+    command: [ "sleep", "infinity" ]
+    user: root
+    volumes:
+      - terraform_cli:/terraform
+      - terraform_providers:/usr/share/terraform/plugins
+    # build:
+    #   context: .
+    #   dockerfile: ../../terraform/Dockerfile
+    #   args:
+    #     ALPINE_BASE_IMAGE_TAG: ${ALPINE_BASE_IMAGE_TAG}
+    #     TERRAFORM_VERSION: ${TERRAFORM_VERSION}
+    #     TERRAFORM_MIRROR_FILENAME: ${TERRAFORM_MIRROR_FILENAME}
+    #     MAINTAINER: ${MAINTAINER}
+    network_mode: none
   ansible:
     image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
     container_name: "ansible-nossh-locale"
@@ -12,6 +30,8 @@ services:
       - ansible_ssh_keys_root:/root/.ssh
       - ansible_ssh_keys_ansible:/home/ansible/.ssh
       - ../..:/workspaces:cached
+      - terraform_cli:/usr/local/bin
+      - terraform_providers:/usr/local/share/terraform/plugins
     #environment:
     #  USER: ${ANSIBLE_USER:-ansible}
     build:
@@ -37,3 +57,7 @@ volumes:
   ansible_ssh_keys_ansible:
     external: true
     name: ansible_ssh_keys_ansible
+  terraform_cli:
+    name: terraform_cli
+  terraform_providers:
+    name: terraform_providers

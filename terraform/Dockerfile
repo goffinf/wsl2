@@ -27,5 +27,6 @@ ARG MAINTAINER
 LABEL maintainer="${MAINTAINER}"
 
 # Copy Terraform binary and the local mirror structure from the build stage
-COPY --from=builder /bin/terraform /usr/bin/terraform
+# COPY --from=builder /bin/terraform /usr/bin/terraform
+COPY --from=builder /bin/terraform /terraform/terraform
 COPY --from=builder /tmp/.terraform/providers/registry.terraform.io /usr/share/terraform/plugins/registry.terraform.io/
