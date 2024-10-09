@@ -5,8 +5,8 @@ services:
     container_name: "ssh-keys-locale"
     restart: "no"
     volumes:
-      - ssh_keys_root_locale:/root/.ssh:ro
-      - ssh_keys_ansible_locale:/home/ansible/.ssh:ro
+      - ansible_ssh_keys_root:/root/.ssh:ro
+      - ansible_ssh_keys_ansible:/home/ansible/.ssh:ro
     command: sleep infinity
   ansible-nossh:
     image: "ubuntu:22.04"
@@ -15,15 +15,14 @@ services:
     # entrypoint: ["sleep", "infinity"]
     command: [ "sleep", "infinity" ]
     volumes:
-      - ssh_keys_root_locale:/root/.ssh
-      - ssh_keys_ansible_locale:/home/ansible/.ssh
+      - ansible_ssh_keys_root:/root/.ssh
+      - ansible_ssh_keys_ansible:/home/ansible/.ssh
       # # - /home/goffinf/.ssh:/root/.ssh:ro
       # # - /home/goffinf/.ssh:/home/ansible/.ssh:ro
-      # - ssh_keys_root_locale:/root/.ssh:ro
-      # - ssh_keys_ansible_locale:/home/ansible/.ssh:ro
-      # # - ssh_keys_ansible_locale:/home/goffinf/.ssh:ro
       # # - /c/Data/homelab/wsl2/ansible:/data
       # # - /c/Data/homelab/wsl2/ansible:/workspaces:cached
 volumes:
-  ssh_keys_root_locale:
-  ssh_keys_ansible_locale:
+  ansible_ssh_keys_ansible:
+    name: ansible_ssh_keys_ansible
+  ansible_ssh_keys_root:
+    name: ansible_ssh_keys_root

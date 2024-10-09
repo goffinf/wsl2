@@ -4,26 +4,26 @@ on:
   workflow_dispatch:
     inputs:
       ansible_ssh_keys_volume_recreate:
-        description: "Whether to recrate the external ansible ssh_keys volume"
+        description: "Recreate the Ansible ssh_keys volume"
         type: choice
         options:
           - 'true'
           - 'false'
         default: 'false'
       ansible_ssh_keys_volume_name:
-        description: "The name of docker volume from which Ansible ssh_keys will be provided"
+        description: "Ansible ssh_keys volume name"
         required: false
         type: string
         default: "ansible_ssh_keys_ansible"
       terraform_volumes_recreate:
-        description: "Whether to recrate the terraform CLI and provider external volumes"
+        description: "Recreate the terraform CLI and provider external volumes"
         type: choice
         options:
           - 'true'
           - 'false'
         default: 'false'
       terraform_cli_volume_name:
-        description: "The name of docker volume from which the Terraform CLI will be provided"
+        description: "Terraform CLI volume name"
         required: false
         type: string
         default: "terraform_cli"
@@ -83,18 +83,18 @@ jobs:
           echo "VOL = $VOL"
           if [ -z "$VOL" ]; then
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} does NOT exist ... creating"
-            docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml up --remove-orphans --detach
+            docker compose -f ./ssh/docker-compose.yml up --remove-orphans --detach
             # clean up stopped container but NOT the volumes
-            docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml down --remove-orphans
+            docker compose -f ./ssh/docker-compose.yml down --remove-orphans
           else
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} already exists"
             if [ ${{ inputs.ansible_ssh_keys_volume_recreate }} == 'true' ]; then
               echo "re-creating the docker volume ${{ inputs.ansible_ssh_keys_volume_name }}"
               # docker volume rm ${{ inputs.ansible_ssh_keys_volume_name }} || true
-              docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml down --remove-orphans --volumes
-              docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml up --remove-orphans --detach
+              docker compose -f ./ssh/docker-compose.yml down --remove-orphans --volumes
+              docker compose -f ./ssh/docker-compose.yml up --remove-orphans --detach
               # clean up stopped container but NOT the volumes
-              docker compose -f ./ansible/docker-compose-ansible-ssh-keys.yml down --remove-orphans
+              docker compose -f ./ssh/docker-compose.yml down --remove-orphans
             fi
           fi;
           docker volume ls

@@ -1,0 +1,55 @@
+services:
+  terraform:
+    image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
+    container_name: "terraform"
+    restart: "no"
+    # restart: "unless-stopped"
+    # command: [ "sleep", "infinity" ]
+    # user: ${ANSIBLE_USER:-ansible}
+    user: root
+    volumes:
+      - terraform_cli:/terraform
+      - terraform_providers:/usr/share/terraform/plugins
+  ansible:
+    image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
+    container_name: "ansible-nossh-locale"
+    # restart: "no"
+    restart: "unless-stopped"
+    command: [ "sleep", "infinity" ]
+    # user: ${ANSIBLE_USER:-ansible}
+    user: root
+    volumes:
+      # - /home/goffinf/.ssh:/root/.ssh
+      # - /home/goffinf/.ssh:/home/ansible/.ssh
+      - ansible_ssh_keys_root:/root/.ssh
+      - ansible_ssh_keys_ansible:/home/ansible/.ssh
+      - ../..:/workspaces:cached
+      - terraform_cli:/usr/local/bin
+      - terraform_providers:/usr/local/share/terraform/plugins
+    #environment:
+    #  USER: ${ANSIBLE_USER:-ansible}
+    build:
+      context: .
+      dockerfile: Dockerfile-locale-nossh
+      args:
+        ANSIBLE_GID: ${ANSIBLE_GID}
+        ANSIBLE_UID: ${ANSIBLE_UID}
+        ANSIBLE_USERNAME: ${ANSIBLE_USERNAME}
+        ANSIBLE_BUILD_ID: ${ANSIBLE_BUILD_ID}
+        CYTOPIA_IMAGE_TAG: ${CYTOPIA_IMAGE_TAG}
+        GOFFINF_SSH_FILES_IMAGE_TAG: ${GOFFINF_SSH_FILES_IMAGE_TAG}
+        LOCALE_LANG: ${LOCALE_LANG}
+        MAINTAINER: ${MAINTAINER}
+        SSH_INCLUDE_KEYS: false
+        SSH_KEYPAIR_ROOT_NAME: ${SSH_KEYPAIR_ROOT_NAME}
+    working_dir: /data
+    # network_mode: none
+volumes:
+  ansible_ssh_keys_root:
+    name: ansible_ssh_keys_root
+  ansible_ssh_keys_ansible:
+    name: ansible_ssh_keys_ansible
+  terraform_cli:
+    name: terraform_cli
+  terraform_providers:
+    name: terraform_providers

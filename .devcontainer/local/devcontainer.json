@@ -7,7 +7,7 @@
 	//"build": {
 	//	"dockerfile": "../ansible/Dockerfile-locale-nossh"
 	//}"
-	"dockerComposeFile": "../../ansible/docker-compose-locale.yml",
+	"dockerComposeFile": "../../ansible/docker-compose-local.yml",
 	"service": "ansible",
 	// "runServices": ["terraform","ansible"],
 	//"workspaceFolder": "/workspaces"
