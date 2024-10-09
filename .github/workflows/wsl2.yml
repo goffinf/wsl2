@@ -83,18 +83,18 @@ jobs:
           echo "VOL = $VOL"
           if [ -z "$VOL" ]; then
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} does NOT exist ... creating"
-            docker compose -f ./ssh/docker-compose.yml up --remove-orphans --detach
+            docker compose -f ./ssh-keys/docker-compose.yml up --remove-orphans --detach
             # clean up stopped container but NOT the volumes
-            docker compose -f ./ssh/docker-compose.yml down --remove-orphans
+            docker compose -f ./ssh-keys/docker-compose.yml down --remove-orphans
           else
             echo "docker volume ${{ inputs.ansible_ssh_keys_volume_name }} already exists"
             if [ ${{ inputs.ansible_ssh_keys_volume_recreate }} == 'true' ]; then
               echo "re-creating the docker volume ${{ inputs.ansible_ssh_keys_volume_name }}"
               # docker volume rm ${{ inputs.ansible_ssh_keys_volume_name }} || true
-              docker compose -f ./ssh/docker-compose.yml down --remove-orphans --volumes
-              docker compose -f ./ssh/docker-compose.yml up --remove-orphans --detach
+              docker compose -f ./ssh-keys/docker-compose.yml down --remove-orphans --volumes
+              docker compose -f ./ssh-keys/docker-compose.yml up --remove-orphans --detach
               # clean up stopped container but NOT the volumes
-              docker compose -f ./ssh/docker-compose.yml down --remove-orphans
+              docker compose -f ./ssh-keys/docker-compose.yml down --remove-orphans
             fi
           fi;
           docker volume ls
