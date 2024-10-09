@@ -4,7 +4,7 @@ services:
     container_name: "ansible-nossh-locale"
     restart: "no"
     # restart: "unless-stopped"
-    command: [ "sleep", "infinity" ]
+    # command: [ "sleep", "infinity" ]
     # user: ${ANSIBLE_USER:-ansible}
     user: root
     volumes:
