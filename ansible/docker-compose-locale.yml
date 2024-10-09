@@ -10,14 +10,6 @@ services:
     volumes:
       - terraform_cli:/terraform
       - terraform_providers:/usr/share/terraform/plugins
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        ALPINE_BASE_IMAGE_TAG: ${ALPINE_BASE_IMAGE_TAG}
-        TERRAFORM_VERSION: ${TERRAFORM_VERSION}
-        TERRAFORM_MIRROR_FILENAME: ${TERRAFORM_MIRROR_FILENAME}
-        MAINTAINER: ${MAINTAINER}
     network_mode: none
   ansible:
     image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
