@@ -2,9 +2,9 @@ services:
   ansible:
     image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
     container_name: "ansible-nossh-locale"
-    restart: "no"
-    # restart: "unless-stopped"
-    # command: [ "sleep", "infinity" ]
+    # restart: "no"
+    restart: "unless-stopped"
+    command: [ "sleep", "infinity" ]
     # user: ${ANSIBLE_USER:-ansible}
     user: root
     volumes:
