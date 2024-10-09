@@ -19,6 +19,23 @@ services:
         TERRAFORM_MIRROR_FILENAME: ${TERRAFORM_MIRROR_FILENAME}
         MAINTAINER: ${MAINTAINER}
     network_mode: none
+  terraform_test:
+    image: "alpine:latest"
+    container_name: "terraform-test"
+    restart: "unless-stopped"
+    # command:
+    #   - /bin/sh
+    #   - -c
+    #   - |
+    #     echo "Copying Terraform CLi and providers"
+    #     cp /terraform/terraform /usr/local/bin/terraform
+    #     cp -Rf /usr/share/terraform/plugins /usr/local/share/terraform
+    command: [ "sleep", "infinity" ]
+    user: root
+    volumes:
+      - terraform_cli:/usr/local/bin
+      - terraform_providers:/usr/local/share/terraform/plugins
+    network_mode: none
 volumes:
   terraform_cli:
     name: terraform_cli

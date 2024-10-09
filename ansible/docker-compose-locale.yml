@@ -1,16 +1,4 @@
 services:
-  terraform:
-    image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
-    container_name: "terraform"
-    restart: "no"
-    # restart: "unless-stopped"
-    # command: [ "sleep", "infinity" ]
-    # user: ${ANSIBLE_USER:-ansible}
-    user: root
-    volumes:
-      - terraform_cli:/terraform
-      - terraform_providers:/usr/share/terraform/plugins
-    network_mode: none
   ansible:
     image: "ghcr.io/goffinf/wsl2-config:${ANSIBLE_BUILD_ID}"
     container_name: "ansible-nossh-locale"
@@ -52,6 +40,8 @@ volumes:
     external: true
     name: ansible_ssh_keys_ansible
   terraform_cli:
+    external: true
     name: terraform_cli
   terraform_providers:
+    external: true
     name: terraform_providers
