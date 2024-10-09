@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       ansible_ssh_keys_volume_recreate:
-        description: "Whether to recrate the ansible ssh_keys volume"
+        description: "Whether to recrate the external ansible ssh_keys volume"
         type: choice
         options:
           - 'true'
@@ -16,7 +16,7 @@ on:
         type: string
         default: "ansible_ssh_keys_ansible"
       terraform_volumes_recreate:
-        description: "Whether to recrate the ansible ssh_keys volume"
+        description: "Whether to recrate the terraform CLI and provider external volumes"
         type: choice
         options:
           - 'true'
