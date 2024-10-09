@@ -1,4 +1,13 @@
 services:
+  sshkeys:
+    image: "ghcr.io/goffinf/infra_ssh_files:000002"
+    container_name: "ansible-ssh-keys"
+    restart: "no"
+    volumes:
+      - ansible_ssh_keys_ansible:/home/ansible/.ssh:ro
+      - ansible_ssh_keys_root:/root/.ssh:ro
+    # command: [ "sleep", "infinity" ]
+    network_mode: none
   terraform:
     image: "ghcr.io/goffinf/terraform:${TERRAFORM_VERSION}-unpacked"
     container_name: "terraform"
