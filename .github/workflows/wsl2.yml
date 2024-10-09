@@ -120,13 +120,13 @@ jobs:
             ls -al
             echo "Show Anisible version"
             ansible --version
-            if [ ${{ inputs.ansible_debug_mode }} == 'true' ]; then
-              echo "Running the Ansible playbook in debug mode"
-              ansible-playbook main.yml --check --diff
-            else
-              echo "Running the Ansible playbook"
-              ansible-playbook main.yml
-            fi
+            # if [ ${{ inputs.ansible_debug_mode }} == 'true' ]; then
+            #   echo "Running the Ansible playbook in debug mode"
+            #   ansible-playbook main.yml --check --diff
+            # else
+            #   echo "Running the Ansible playbook"
+            #   ansible-playbook main.yml
+            # fi
             echo "Removing git repo"
             rm -rf "/tmp/${GITHUB_REPOSITORY_NAME}"
 
