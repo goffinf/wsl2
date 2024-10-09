@@ -107,6 +107,7 @@ jobs:
           cacheFrom: "${{ inputs.dev_container_image_name }}:${{ inputs.dev_container_image_version }}"
           configFile: "./.devcontainer/gha/devcontainer.json"
           runCmd: |
+            terraform version
             pwd
             GITHUB_REPOSITORY="${{ github.repository }}"
             echo "GITHUB_REPOSITORY = $GITHUB_REPOSITORY"
